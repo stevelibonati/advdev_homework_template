@@ -30,7 +30,7 @@ echo "Setting up Nexus in project $GUID-nexus"
 
 # To be Implemented by Student
 
-#oc new-app -f ../templates/sjl-nexus.yaml -n sjl-nexus
+oc new-app -f ../templates/sjl-nexus.yaml -n sjl-nexus
 
 while : ; do
   echo "Checking if Nexus is Ready..."
