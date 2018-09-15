@@ -34,13 +34,13 @@ oc new-app -f ../templates/sjl-nexus.yaml -n sjl-nexus
 
 while : ; do
   echo "Checking if Nexus is Ready..."
-  # oc get pod -n ${GUID}-nexus|grep '\-2\-'|grep -v deploy|grep "1/1"
-   oc get pod -n ${GUID}-nexus|grep "1/1"
-  if [[ "$?" == "0" ]]; then
-	 break
+  status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://$(oc get route nexus3 --template='{{ .spec.host }}' -n ${GUID}-nexus))
+  if [[ "$status_code" -ne 200 ]] ; then
+    echo "...no. Sleeping 10 seconds."
+      sleep 10
+    else
+      break
   fi
-  echo "...no. Sleeping 10 seconds."
-  sleep 10
 done
 
 curl -o setup_nexus3.sh -s https://raw.githubusercontent.com/wkulhanek/ocp_advanced_development_resources/master/nexus/setup_nexus3.sh
