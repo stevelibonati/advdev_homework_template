@@ -334,8 +334,6 @@ objects:
   metadata:
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
-      pv.kubernetes.io/bind-completed: "yes"
-      pv.kubernetes.io/bound-by-controller: "yes"
     creationTimestamp: null
     labels:
       app: sonarqube_db
@@ -347,14 +345,11 @@ objects:
     resources:
       requests:
         storage: 4Gi
-    volumeName: vol11
   status: {}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
     annotations:
-      pv.kubernetes.io/bind-completed: "yes"
-      pv.kubernetes.io/bound-by-controller: "yes"
     creationTimestamp: null
     name: sonarqube-pvc
   spec:
@@ -363,7 +358,6 @@ objects:
     resources:
       requests:
         storage: 4Gi
-    volumeName: vol47
   status: {}
 - apiVersion: v1
   data:
