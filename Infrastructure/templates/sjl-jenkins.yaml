@@ -173,6 +173,29 @@ objects:
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
+    creationTimestamp: null
+    labels:
+      app: jenkins-persistent
+      template: jenkins-persistent-template
+    name: jenkins
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: jenkins_edit
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
+  userNames:
+  - system:serviceaccount:sjl-jenkins:jenkins
+- apiVersion: v1
   kind: Service
   metadata:
     annotations:
@@ -257,37 +280,55 @@ objects:
     to:
       kind: "DockerImage"
       name: "docker-registry.default.svc:5000/sjl-jenkins/jenkins-slave-maven-appdev:v3.9"
-- apiVersion: v1
-  kind: BuildConfig
+- apiVersion: "v1"
+  kind: "BuildConfig"
   metadata:
-    creationTimestamp: null
-    name: tasks-pipeline
+    name: "parksmap-pipeline"
   spec:
-    nodeSelector: {}
-    output: {}
-    postCommit: {}
-    resources: {}
-    runPolicy: Serial
     source:
       git:
-        ref: master
-        uri: http://gogs.sjl-gogs.svc.cluster.local:3000/CICDLabs/openshift-tasks-private
-      sourceSecret:
-        name: gogs-secret
-      type: Git
+        uri: "https://github.com/slibonati/advdev_homework_template"
+      contextDir: "ParksMap"
     strategy:
-      jenkinsPipelineStrategy:
-        jenkinsfilePath: Jenkinsfile
-      type: JenkinsPipeline
-    triggers: []
-  status:
-    lastVersion: 0
-- apiVersion: v1
-  data:
-    password: Z29ncw==
-    username: Z29ncw==
-  kind: Secret
+        jenkinsPipelineStrategy:
+          jenkinsfilePath: Jenkinsfile
+          env:
+            - name: "GUID"
+              value: "sjl"
+            - name: "CLUSTER"
+              value: "na39.openshift.opentlc.com"
+- apiVersion: "v1"
+  kind: "BuildConfig"
   metadata:
-    creationTimestamp: null
-    name: gogs-secret
-  type: kubernetes.io/basic-auth
+    name: "mlbparks-pipeline"
+  spec:
+    source:
+      git:
+        uri: "https://github.com/slibonati/advdev_homework_template"
+      contextDir: "MLBParks"
+    strategy:
+        jenkinsPipelineStrategy:
+          jenkinsfilePath: Jenkinsfile
+          env:
+             - name: "GUID"
+               value: "sjl"
+             - name: "CLUSTER"
+               value: "na39.openshift.opentlc.com"
+- apiVersion: "v1"
+  kind: "BuildConfig"
+  metadata:
+    name: "nationalparks-pipeline"
+  spec:
+    source:
+      git:
+        uri: "https://github.com/slibonati/advdev_homework_template"
+      contextDir: "Nationalparks"
+    strategy:
+        jenkinsPipelineStrategy:
+          jenkinsfilePath: Jenkinsfile
+          env:
+             - name: "GUID"
+               value: "sjl"
+             - name: "CLUSTER"
+               value: "na39.openshift.opentlc.com"
+
