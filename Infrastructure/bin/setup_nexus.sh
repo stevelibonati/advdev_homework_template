@@ -34,8 +34,9 @@ oc new-app -f ../templates/sjl-nexus.yaml -n sjl-nexus
 
 while : ; do
   echo "Checking if Nexus is Ready..."
-  oc get pod -n ${GUID}-nexus|grep '\-2\-'|grep -v deploy|grep "1/1"
-  if [[ "$?" == "1" ]]; then
+  # oc get pod -n ${GUID}-nexus|grep '\-2\-'|grep -v deploy|grep "1/1"
+   oc get pod -n ${GUID}-nexus|grep "1/1"
+  if [[ "$?" == "0" ]]; then
 	 break
   fi
   echo "...no. Sleeping 10 seconds."
