@@ -74,7 +74,7 @@ podTemplate(
        sh "oc start-build tasks --follow --from-file=./target/mlbparks.war -n ${GUID}-parks-dev"
        
        // Tag the image using the devTag
-       openshiftTag alias: 'false', destStream: 'tasks', destTag: devTag, destinationNamespace: '$GUID}-parks-dev', namespace: '${GUID}lib-parks-dev', srcStream: 'tasks', srcTag: 'latest', verbose: 'false'
+       openshiftTag alias: 'false', destStream: 'mlbparks-binary', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'mlbparks-binary', srcTag: 'latest', verbose: 'false'
      }
 
 
