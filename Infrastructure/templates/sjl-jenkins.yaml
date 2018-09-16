@@ -274,6 +274,9 @@ objects:
       to:
         kind: "ImageStreamTag"
         name: "jenkins-slave-maven-appdev:v3.9"
+    triggers:
+    - type: ImageChange
+    imageChange: {}
 - apiVersion: "v1"
   kind: "BuildConfig"
   metadata:
