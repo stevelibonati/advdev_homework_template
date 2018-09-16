@@ -294,9 +294,9 @@ objects:
           jenkinsfilePath: Jenkinsfile
           env:
             - name: "GUID"
-              value: "sjl"
+              value: ${GUID}
             - name: "CLUSTER"
-              value: "na39.openshift.opentlc.com"
+              value: ${CLUSTER}
 - apiVersion: "v1"
   kind: "BuildConfig"
   metadata:
@@ -311,9 +311,10 @@ objects:
           jenkinsfilePath: Jenkinsfile
           env:
              - name: "GUID"
-               value: "sjl"
+               value: ${GUID}
              - name: "CLUSTER"
-               value: "na39.openshift.opentlc.com"
+               value: ${CLUSTER}
+
 - apiVersion: "v1"
   kind: "BuildConfig"
   metadata:
@@ -328,7 +329,9 @@ objects:
           jenkinsfilePath: Jenkinsfile
           env:
              - name: "GUID"
-               value: "sjl"
+               value: ${GUID}
              - name: "CLUSTER"
-               value: "na39.openshift.opentlc.com"
-
+               value: ${CLUSTER}
+parameters:
+- name: GUID
+- name: CLUSTER
