@@ -28,5 +28,5 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 
 # To be Implemented by Student
 
-oc new-app -f ../templates/sjl-jenkins.yaml -n sjl-jenkins -p GUID=${GUID} CLUSTER=${CLUSTER} REPO=${REPO}
+oc new-app -f ../templates/${GUID}-jenkins.yaml -p GUID=${GUID} -p CLUSTER=${CLUSTER} -p REPO=${REPO} -n ${GUID}-jenkins
 
