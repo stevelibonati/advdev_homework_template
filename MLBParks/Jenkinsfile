@@ -15,25 +15,24 @@ podTemplate(
   node('skopeo-pod') {
     echo "GUID: ${GUID}"
     echo "CLUSTER: ${CLUSTER}"
-    echo "workspace directory is ${WORKSPACE}"
     
     // Your Pipeline Code goes here. Make sure to use the ${GUID} and ${CLUSTER} parameters where appropriate
     // You need to build the application in directory `MLBParks`.
     // Also copy "../nexus_settings.xml" to your build directory
     // and replace 'GUID' in the file with your ${GUID} to point to >your< Nexus instance
     
-    dir('MLBParks') {
-      sh 'ls -la'
-      sh "cp ../nexus_settings.xml ." 
-      sh "sed -i -e 's/GUID/${GUID}/g' nexus_settings.xml"
 
-      def mvnCmd = "mvn -s ./nexus_settings.xml"
+    def mvnCmd = "mvn -s ./nexus_settings.xml"
 
-      // Checkout Source Code
-      stage('Checkout Source') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/slibonati/advdev_homework_template.git']]])
+    // Checkout Source Code
+    stage('Checkout Source') {
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/slibonati/advdev_homework_template.git']]])
     
-      }    
+    }
+
+    dir('MLBParks') {
+      sh "cp ../nexus_settings.xml ."
+      sh "sed -i -e 's/GUID/${GUID}/g' nexus_settings.xml"
     }
 
 
