@@ -70,8 +70,8 @@ podTemplate(
      
      // Build the OpenShift Image in OpenShift and tag it.
      stage('Build and Tag OpenShift Image') {
-       echo "Building OpenShift container image tasks:${devTag}"
-       sh "oc start-build tasks --follow --from-file=./target/mlbparks.war -n ${GUID}-parks-dev"
+       echo "Building OpenShift container image mlbparks-binary:${devTag}"
+       sh "oc start-build mlbparks-binary --follow --from-file=./target/mlbparks.war -n ${GUID}-parks-dev"
        
        // Tag the image using the devTag
        openshiftTag alias: 'false', destStream: 'mlbparks-binary', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'mlbparks-binary', srcTag: 'latest', verbose: 'false'
