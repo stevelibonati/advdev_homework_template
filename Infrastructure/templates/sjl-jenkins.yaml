@@ -278,8 +278,9 @@ objects:
         namespace: "openshift"
   output: 
     to:
-      kind: "DockerImage"
-      name: "docker-registry.default.svc:5000/sjl-jenkins/jenkins-slave-maven-appdev:v3.9"
+      kind: "ImageStreamTag"
+      #name: "docker-registry.default.svc:5000/sjl-jenkins/jenkins-slave-maven-appdev:v3.9"
+      name: "jenkins-slave-maven-appdev:v3.9"
 - apiVersion: "v1"
   kind: "BuildConfig"
   metadata:
@@ -287,7 +288,7 @@ objects:
   spec:
     source:
       git:
-        uri: "https://github.com/slibonati/advdev_homework_template"
+        uri: ${REPO}
       contextDir: "ParksMap"
     strategy:
         jenkinsPipelineStrategy:
@@ -304,7 +305,7 @@ objects:
   spec:
     source:
       git:
-        uri: "https://github.com/slibonati/advdev_homework_template"
+        uri: ${REPO}
       contextDir: "MLBParks"
     strategy:
         jenkinsPipelineStrategy:
@@ -322,7 +323,7 @@ objects:
   spec:
     source:
       git:
-        uri: "https://github.com/slibonati/advdev_homework_template"
+        uri: ${REPO}
       contextDir: "Nationalparks"
     strategy:
         jenkinsPipelineStrategy:
@@ -335,3 +336,4 @@ objects:
 parameters:
 - name: GUID
 - name: CLUSTER
+- name: REPO
