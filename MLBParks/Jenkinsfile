@@ -20,7 +20,6 @@ podTemplate(
     // You need to build the application in directory `MLBParks`.
     // Also copy "../nexus_settings.xml" to your build directory
     // and replace 'GUID' in the file with your ${GUID} to point to >your< Nexus instance
-    
 
     def mvnCmd = "mvn -s ./nexus_settings.xml"
 
@@ -33,21 +32,30 @@ podTemplate(
     dir('MLBParks') {
       sh "cp ../nexus_settings.xml ."
       sh "sed -i -e 's/GUID/${GUID}/g' nexus_settings.xml"
-    }
-
-
-    def groupId    = getGroupIdFromPom("pom.xml")
-    def artifactId = getArtifactIdFromPom("pom.xml")
-    def version    = getVersionFromPom("pom.xml")
-
-    // Set the tag for the development image: version + build number
-    def devTag  = "${version}-${BUILD_NUMBER}"
-    // Set the tag for the production image: version
-    def prodTag = "${version}"
-    
     
 
- 
+      def groupId    = getGroupIdFromPom("pom.xml")
+      def artifactId = getArtifactIdFromPom("pom.xml")
+      def version    = getVersionFromPom("pom.xml")
+
+      // Set the tag for the development image: version + build number
+      def devTag  = "${version}-${BUILD_NUMBER}"
+      // Set the tag for the production image: version
+      def prodTag = "${version}"
+    
+     // Using Maven build the war file
+     // Do not run tests in this step
+     stage('Build war') {
+       echo "Building version ${devTag}"
+       sh "${mvnCmd} clean package -DskipTests"
+     }
+
+     // Using Maven run the unit tests
+     stage('Unit Tests') {
+       echo "Running Unit Tests"
+       sh "${mvnCmd} test"
+     }
+   }
   }
 }
 
