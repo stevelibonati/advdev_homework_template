@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: sjl-parks-dev
+objects:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewBuild
+    creationTimestamp: '2018-09-16T22:14:32Z'
+    labels:
+      build: mlbparks-binary
+    name: mlbparks-binary
+    namespace: sjl-parks-dev
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'mlbparks-binary:latest'
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: 'jboss-eap70-openshift:1.7'
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+      - github:
+          secret: OVBsoa5jbi6Pm7UrWxDh
+        type: GitHub
+      - generic:
+          secret: 16RQ_vSvd9Py2eri9z2B
+        type: Generic
+  status:
+    lastVersion: 0
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewBuild
+    creationTimestamp: '2018-09-16T22:14:32Z'
+    generation: 1
+    labels:
+      build: mlbparks-binary
+    name: mlbparks-binary
+    namespace: sjl-parks-dev
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary'
