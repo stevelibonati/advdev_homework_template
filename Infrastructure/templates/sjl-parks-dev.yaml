@@ -95,5 +95,5 @@ objects:
   kind: ConfigMap
   metadata:
     creationTimestamp: '2018-09-17T01:38:58Z'
-    name: sjl-parks-dev
+    name: sjl-parks-dev-config
     namespace: sjl-parks-dev
