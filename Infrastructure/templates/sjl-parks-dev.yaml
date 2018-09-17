@@ -84,19 +84,6 @@ objects:
   userNames:
   - system:serviceaccount:sjl-jenkins:jenkins
 - apiVersion: v1
-  data:
-      DB_HOST=mongodb
-      DB_PORT=27017
-      DB_USERNAME=mongodb
-      DB_PASSWORD=mongodb
-      DB_NAME=parks
-      APPNAME="MLB Parks (Blue)"
-  kind: ConfigMap
-  metadata:
-    creationTimestamp: '2018-09-17T01:38:58Z'
-    name: sjl-parks-dev-config
-    namespace: sjl-parks-dev
-- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     annotations:
@@ -132,15 +119,15 @@ objects:
           deploymentconfig: mlbparks-binary
       spec:
         containers:
+          - envFrom:
+              - configMapRef:
+                  name: sjl-parks-dev-config
         - image: docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary:1.1-1
           imagePullPolicy: IfNotPresent
           name: mlbparks-binary
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          envFrom:
-            - configMapRef:
-                name: sjl-parks-dev-config
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
@@ -195,4 +182,15 @@ objects:
     type: ClusterIP
   status:
     loadBalancer: {}
-
+- apiVersion: v1
+  data:
+    DB_HOST: mongodb
+    DB_PORT: '27017'
+    DB_USERNAME: mongodb
+    DB_PASSWORD: mongodb
+    DB_NAME: parks
+    APPNAME: MLB Parks (Blue)
+  kind: ConfigMap
+  metadata:
+    name: sjl-parks-dev-config
+    namespace: sjl-parks-dev
