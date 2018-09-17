@@ -86,7 +86,7 @@ podTemplate(
        // Deploy the development application.
        openshiftDeploy depCfg: 'mlbparks-binary', namespace: '${GUID}-parks-dev', verbose: 'false', waitTime: '', waitUnit: 'sec'
        openshiftVerifyDeployment depCfg: 'mlbparks-binary', namespace: '${GUID}-parks-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '', waitUnit: 'sec'
-       openshiftVerifyService namespace: 'mlbparks-binary', svcName: 'mlbparks-binary', verbose: 'false'
+       openshiftVerifyService namespace: '${GUID}-parks-dev', svcName: 'mlbparks-binary', verbose: 'false'
 
      }
 
