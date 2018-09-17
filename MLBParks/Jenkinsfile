@@ -51,15 +51,31 @@ podTemplate(
      }
 
      // Using Maven run the unit tests
-     stage('Unit Tests') {
-       echo "Running Unit Tests"
+    // stage('Unit Tests') {
+      // echo "Running Unit Tests"
         //sh "${mvnCmd} test"
-     }
+    // }
      
      // Using Maven call SonarQube for Code Analysis
-     stage('Code Analysis') {
-       echo "Running Code Analysis"
+    // stage('Code Analysis') {
+      // echo "Running Code Analysis"
        // sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-${GUID}-sonarqube.apps.${CLUSTER} -Dsonar.projectName=${JOB_BASE_NAME}-${devTag}"
+    // }
+     
+     stage('Tests') {
+       steps {
+          parallel (
+              "Unit Tests" : {
+                echo "Running Unit Tests"
+                sh "${mvnCmd} test"
+              },
+              "Code Analysis" : {
+                  echo "Running Code Analysis"
+                  sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-${GUID}-sonarqube.apps.${CLUSTER} -Dsonar.projectName=${JOB_BASE_NAME}-${devTag}"
+
+              }
+          )
+       }
      }
 
      // Publish the built war file to Nexus
