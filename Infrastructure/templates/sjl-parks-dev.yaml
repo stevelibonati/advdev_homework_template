@@ -107,7 +107,7 @@ objects:
           failurePolicy: Abort
           execNewPod:
             containerName: mlbparks-binary 
-            command: [ "curl","-s", "http://mlbparks-binary.apps.na39.openshift.opentlc.com:8080/ws/data/load" ] 
+            command: [ "curl","-s", "http://mlbparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -129,6 +129,28 @@ objects:
                    name: sjl-parks-dev-config
             image: docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary:1.1-1
             imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: mlbparks-binary.apps.na39.openshift.opentlc.com/ws/healthz/
+                port: 80
+                scheme: HTTP
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+          name: mlbparks-binary
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: mlbparks-binary.apps.na39.openshift.opentlc.com/ws/healthz/
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources: {}
             name: mlbparks-binary
             resources: {}
             terminationMessagePath: /dev/termination-log
