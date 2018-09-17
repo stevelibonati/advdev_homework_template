@@ -82,6 +82,12 @@ podTemplate(
        echo "Deploying container image to Development Project"
        // Update the Image on the Development Deployment Config
        sh "oc set image dc/mlbparks-binary mlbparks-binary=docker-registry.default.svc:5000/${GUID}-parks-dev/mlbparks-binary:${devTag} -n ${GUID}-parks-dev"
+       
+       // Deploy the development application.
+       openshiftDeploy depCfg: 'mlbparks-binary', namespace: '${GUID}-parks-dev', verbose: 'false', waitTime: '', waitUnit: 'sec'
+       openshiftVerifyDeployment depCfg: 'mlbparks-binary', namespace: '${GUID}-parks-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '', waitUnit: 'sec'
+       openshiftVerifyService namespace: 'mlbparks-binary', svcName: 'mlbparks-binary', verbose: 'false'
+
      }
 
     
