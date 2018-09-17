@@ -11,8 +11,8 @@ objects:
       openshift.io/generated-by: OpenShiftNewBuild
     creationTimestamp: '2018-09-16T22:14:32Z'
     labels:
-      build: nationalparks-binary
-    name: nationalparks-binary
+      build: mlbparks-binary
+    name: mlbparks-binary
     namespace: sjl-parks-dev
   spec:
     failedBuildsHistoryLimit: 5
@@ -20,7 +20,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: 'nationalparks-binary:latest'
+        name: 'mlbparks-binary:latest'
     postCommit: {}
     resources: {}
     runPolicy: Serial
@@ -31,7 +31,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: 'redhat-openjdk18-openshift:1.2'
+          name: 'jboss-eap70-openshift:1.7'
           namespace: openshift
       type: Source
     successfulBuildsHistoryLimit: 5
@@ -52,14 +52,37 @@ objects:
     creationTimestamp: '2018-09-16T22:14:32Z'
     generation: 1
     labels:
-      build: nationalparks-binary
-    name: nationalparks-binary
+      build: mlbparks-binary
+    name: mlbparks-binary
     namespace: sjl-parks-dev
   spec:
     lookupPolicy:
       local: false
   status:
-    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary'
+    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary'
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
+    creationTimestamp: null
+    labels:
+      app: jenkins-persistent
+      template: jenkins-persistent-template
+    name: jenkins
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: jenkins_edit
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
+  userNames:
+  - system:serviceaccount:sjl-jenkins:jenkins
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -68,14 +91,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: nationalparks-binary
-    name: nationalparks-binary
+      app: mlbparks-binary
+    name: mlbparks-binary
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: nationalparks-binary
-      deploymentconfig: nationalparks-binary
+      app: mlbparks-binary
+      deploymentconfig: mlbparks-binary
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -83,8 +106,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: nationalparks-binary 
-            command: [ "curl","-s", "http://nationalparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: mlbparks-binary 
+            command: [ "curl","-s", "http://mlbparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -97,14 +120,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: nationalparks-binary
-          deploymentconfig: nationalparks-binary
+          app: mlbparks-binary
+          deploymentconfig: mlbparks-binary
       spec:
         containers:
           - envFrom:
               - configMapRef:
-                   name: sjl-nationalparks-dev-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
+                   name: sjl-parks-dev-config
+            image: docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -126,7 +149,7 @@ objects:
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 2
-            name: nationalparks-binary
+            name: mlbparks-binary
             resources: {}
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
@@ -144,15 +167,15 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: nationalparks-binary
-    name: nationalparks-binary
+      app: mlbparks-binary
+    name: mlbparks-binary
   spec:
-    host: nationalparks-binary.apps.na39.openshift.opentlc.com
+    host: mlbparks-binary.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
       kind: Service
-      name: nationalparks-binary
+      name: mlbparks-binary
       weight: 100
     wildcardPolicy: None
   status:
@@ -161,7 +184,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: nationalparks-binary.apps.na39.openshift.opentlc.com
+      host: mlbparks-binary.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
@@ -169,17 +192,17 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: nationalparks-binary
+      app: mlbparks-binary
       type: parksmap-backend
-    name: nationalparks-binary
+    name: mlbparks-binary
   spec:
     ports:
     - port: 8080
       protocol: TCP
       targetPort: 8080
     selector:
-      app: nationalparks-binary
-      deploymentconfig: nationalparks-binary
+      app: mlbparks-binary
+      deploymentconfig: mlbparks-binary
     sessionAffinity: None
     type: ClusterIP
   status:
@@ -191,8 +214,8 @@ objects:
     DB_USERNAME: mongodb
     DB_PASSWORD: mongodb
     DB_NAME: parks
-    APPNAME: National Parks (Dev)
+    APPNAME: MLB Parks (Dev)
   kind: ConfigMap
   metadata:
-    name: sjl-nationalparks-dev-config
+    name: sjl-parks-dev-config
     namespace: sjl-parks-dev
