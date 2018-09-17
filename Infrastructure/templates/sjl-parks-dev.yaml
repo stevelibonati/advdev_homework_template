@@ -60,3 +60,40 @@ objects:
       local: false
   status:
     dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary'
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
+    creationTimestamp: null
+    labels:
+      app: jenkins-persistent
+      template: jenkins-persistent-template
+    name: jenkins
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: jenkins_edit
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
+  userNames:
+  - system:serviceaccount:sjl-jenkins:jenkins
+- apiVersion: v1
+  data:
+    sjl-parks-dev.properties: |
+      DB_HOST=mongodb
+      DB_PORT=27017
+      DB_USERNAME=mongodb
+      DB_PASSWORD=mongodb
+      DB_NAME=parks
+      APPNAME="MLB Parks (Blue)"
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: '2018-09-17T01:38:58Z'
+    name: sjl-parks-dev
+    namespace: sjl-parks-dev
