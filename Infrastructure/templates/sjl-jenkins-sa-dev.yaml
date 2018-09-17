@@ -4,6 +4,7 @@ metadata:
   creationTimestamp: null
   name: sjl-parks-dev
 objects:
+- apiVersion: v1
   kind: ServiceAccount
   metadata:
     annotations:
