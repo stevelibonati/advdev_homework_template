@@ -85,7 +85,6 @@ objects:
   - system:serviceaccount:sjl-jenkins:jenkins
 - apiVersion: v1
   data:
-    sjl-parks-dev.properties: |
       DB_HOST=mongodb
       DB_PORT=27017
       DB_USERNAME=mongodb
@@ -139,7 +138,6 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          command: [ "/bin/sh", "-c", "env" ]
           envFrom:
             - configMapRef:
                 name: sjl-parks-dev-config
