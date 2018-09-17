@@ -139,18 +139,16 @@ objects:
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 5
-          name: mlbparks-binary
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: mlbparks-binary.apps.na39.openshift.opentlc.com/ws/healthz/
-              port: 80
-              scheme: HTTP
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 5
-          resources: {}
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: mlbparks-binary.apps.na39.openshift.opentlc.com/ws/healthz/
+                port: 80
+                scheme: HTTP
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
             name: mlbparks-binary
             resources: {}
             terminationMessagePath: /dev/termination-log
