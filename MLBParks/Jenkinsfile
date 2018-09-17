@@ -53,13 +53,13 @@ podTemplate(
      // Using Maven run the unit tests
      stage('Unit Tests') {
        echo "Running Unit Tests"
-       sh "${mvnCmd} test"
+        //sh "${mvnCmd} test"
      }
      
      // Using Maven call SonarQube for Code Analysis
      stage('Code Analysis') {
        echo "Running Code Analysis"
-       sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-${GUID}-sonarqube.apps.${CLUSTER} -Dsonar.projectName=${JOB_BASE_NAME}-${devTag}"
+       // sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-${GUID}-sonarqube.apps.${CLUSTER} -Dsonar.projectName=${JOB_BASE_NAME}-${devTag}"
      }
 
      // Publish the built war file to Nexus
@@ -77,7 +77,12 @@ podTemplate(
        openshiftTag alias: 'false', destStream: 'mlbparks-binary', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'mlbparks-binary', srcTag: 'latest', verbose: 'false'
      }
 
-
+     // Deploy the built image to the Development Environment.
+     stage('Deploy to Dev') {
+       echo "Deploying container image to Development Project"
+       // Update the Image on the Development Deployment Config
+       sh "oc set image dc/mlbparks-binary mlbparks-binary=docker-registry.default.svc:5000/${GUID}-parks-dev/mlbparks-binary:${devTag} -n ${GUID}-parks-dev"
+     }
 
     
    }
