@@ -4,5 +4,5 @@
 ./setup_sonar.sh sjl
 ./setup_jenkins.sh sjl https://github.com/slibonati/advdev_homework_template na39.openshift.opentlc.com
 ./setup_nexus.sh sjl
-./setup_dev.sh
+./setup_dev.sh sjl
 
