@@ -249,3 +249,46 @@ objects:
   metadata:
     name: sjl-mlbparks-green-config
     namespace: sjl-parks-prod
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: '2018-09-18T21:57:51Z'
+    generation: 2
+    name: mlbparks-binary-blue
+    namespace: sjl-parks-prod
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - annotations: null
+        from:
+          kind: DockerImage
+          name: 'docker-registry.default.svc:5000/sjl-parks-prod/mlbparks-binary:0.0'
+        generation: 2
+        importPolicy: {}
+        name: '0.0'
+        referencePolicy:
+          type: Source
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.dockerRepositoryCheck: '2018-09-18T21:57:51Z'
+    generation: 2
+    name: mlbparks-binary-green
+    namespace: sjl-parks-prod
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - annotations: null
+        from:
+          kind: DockerImage
+          name: 'docker-registry.default.svc:5000/sjl-parks-prod/mlbparks-binary:0.0'
+        generation: 2
+        importPolicy: {}
+        name: '0.0'
+        referencePolicy:
+          type: Source
+
