@@ -191,7 +191,7 @@ objects:
     DB_USERNAME: mongodb
     DB_PASSWORD: mongodb
     DB_NAME: parks
-    APPNAME: National Parks (Dev)
+    APPNAME: ParksMap (Dev)
   kind: ConfigMap
   metadata:
     name: sjl-parksmaps-dev-config

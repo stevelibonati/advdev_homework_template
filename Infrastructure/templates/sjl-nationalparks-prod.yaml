@@ -47,7 +47,7 @@ objects:
         containers:
           - envFrom:
               - configMapRef:
-                   name: sjl-nationalparks-dev-config
+                   name: sjl-nationalparks-blue-config
             image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
@@ -124,7 +124,7 @@ objects:
         containers:
           - envFrom:
               - configMapRef:
-                   name: sjl-nationalparks-dev-config
+                   name: sjl-nationalparks-green-config
             image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
@@ -232,8 +232,21 @@ objects:
     DB_USERNAME: mongodb
     DB_PASSWORD: mongodb
     DB_NAME: parks
-    APPNAME: National Parks (Dev)
+    APPNAME: National Parks (Blue)
   kind: ConfigMap
   metadata:
-    name: sjl-nationalparks-dev-config
-    namespace: sjl-parks-dev
+    name: sjl-nationalparks-blue-config
+    namespace: sjl-parks-prod
+- apiVersion: v1
+  data:
+    DB_HOST: mongodb
+    DB_PORT: '27017'
+    DB_USERNAME: mongodb
+    DB_PASSWORD: mongodb
+    DB_NAME: parks
+    APPNAME: National Parks (Green)
+  kind: ConfigMap
+  metadata:
+    name: sjl-nationalparks-green-config
+    namespace: sjl-parks-prod
+
