@@ -17,6 +17,8 @@ echo "Setting up Parks Production Environment in project ${GUID}-parks-prod"
 
 # Jenkins Service Account
 oc new-app -f ../templates/sjl-jenkins-sa.yaml -n sjl-parks-prod
+# StatefulSet
+oc new-app -f ../templates/sjl-parks-prod.yaml -n sjl-parks-prod
 # Microservices
 oc new-app -f ../templates/sjl-mlbparks-prod.yaml -n sjl-parks-prod
 oc new-app -f ../templates/sjl-nationalparks-prod.yaml -n sjl-parks-prod
