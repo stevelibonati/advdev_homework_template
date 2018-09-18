@@ -103,7 +103,7 @@ objects:
         containers:
           - envFrom:
               - configMapRef:
-                   name: sjl-parks-dev-config
+                   name: sjl-parksmaps-dev-config
             image: docker-registry.default.svc:5000/sjl-parks-dev/parksmap-binary:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
@@ -191,8 +191,21 @@ objects:
     DB_USERNAME: mongodb
     DB_PASSWORD: mongodb
     DB_NAME: parks
-    APPNAME: ParksMap (Dev) 
+    APPNAME: National Parks (Dev)
   kind: ConfigMap
   metadata:
-    name: sjl-parksmap-dev-config
+    name: sjl-parksmaps-dev-config
     namespace: sjl-parks-dev
+# Role binding
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: default_view
+  roleRef:
+    name: view
+  subjects:
+  - kind: ServiceAccount
+    name: default
+  userNames:
+  - system:serviceaccount:sjl-parks-dev:default
