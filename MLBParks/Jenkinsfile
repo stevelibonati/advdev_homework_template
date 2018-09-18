@@ -50,18 +50,6 @@ podTemplate(
        sh "${mvnCmd} clean package -DskipTests"
      }
 
-     // Using Maven run the unit tests
-    // stage('Unit Tests') {
-      // echo "Running Unit Tests"
-        //sh "${mvnCmd} test"
-    // }
-     
-     // Using Maven call SonarQube for Code Analysis
-    // stage('Code Analysis') {
-      // echo "Running Code Analysis"
-       // sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube-${GUID}-sonarqube.apps.${CLUSTER} -Dsonar.projectName=${JOB_BASE_NAME}-${devTag}"
-    // }
-     
      stage('Tests') {
           parallel (
               "Unit Tests" : {
@@ -76,7 +64,6 @@ podTemplate(
           )
        }
 
-     // Publish the built war file to Nexus
      stage('Publish to Nexus') {
        echo "Publish to Nexus"
        sh "${mvnCmd} deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::http://nexus3.${GUID}-nexus.svc.cluster.local:8081/repository/releases"
@@ -114,7 +101,7 @@ podTemplate(
 
     // Tag the built image with the production tag.
      openshiftTag alias: 'false', destStream: 'mlbparks-binary', destTag: prodTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'mlbparks-binary', srcTag: devTag, verbose: 'false'
-   }
+    }
    
     // Blue/Green Deployment into Production
     // -------------------------------------
@@ -129,6 +116,7 @@ podTemplate(
       }
       echo "Active Application:      " + activeApp
       echo "Destination Application: " + destApp
+    }
     }
   }
 }
