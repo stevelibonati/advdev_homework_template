@@ -15,5 +15,11 @@ echo "Setting up Parks Production Environment in project ${GUID}-parks-prod"
 # To be Implemented by Student
 
 
-#oc policy add-role-to-user edit system:serviceaccount:jenkins:jenkins -n ${GUID}-parks-prod
+# Jenkins Service Account
+oc new-app -f ../templates/sjl-jenkins-sa.yaml -n sjl-parks-prod
+# Microservices
+oc new-app -f ../templates/sjl-mlbparks-prod.yaml -n sjl-parks-prod
+oc new-app -f ../templates/sjl-nationalparks-prod.yaml -n sjl-parks-prod
+oc new-app -f ../templates/sjl-parksmap-prod.yaml -n sjl-parks-prod
+
 
