@@ -4,6 +4,7 @@ metadata:
   creationTimestamp: null
   name: sjl-nationalparks-prod
 objects:
+- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     annotations:
@@ -70,6 +71,83 @@ objects:
               successThreshold: 1
               timeoutSeconds: 2
             name: nationalparks-binary-blue
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers: []
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 24
+    labels:
+      app: nationalparks-binary-green
+    name: nationalparks-binary-green
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: nationalparks-binary-green
+      deploymentconfig: nationalparks-binary-green
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        post:
+          failurePolicy: Abort
+          execNewPod:
+            containerName: nationalparks-binary 
+            command: [ "curl","-s", "http://nationalparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: nationalparks-binary-green
+          deploymentconfig: nationalparks-binary-green
+      spec:
+        containers:
+          - envFrom:
+              - configMapRef:
+                   name: sjl-nationalparks-dev-config
+            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /ws/healthz/
+                port: 8080
+                scheme: HTTP
+              initialDelaySeconds: 120
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /ws/healthz/
+                port: 8080
+                scheme: HTTP
+              initialDelaySeconds: 20
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
+            name: nationalparks-binary-green
             resources: {}
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
