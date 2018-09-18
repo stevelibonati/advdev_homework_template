@@ -40,7 +40,7 @@ podTemplate(
     
      // Using Maven build the war file
      // Do not run tests in this step
-     stage('Build war') {
+     stage('Build jar') {
        echo "Building version ${devTag}"
        sh "${mvnCmd} clean package -DskipTests"
      }
