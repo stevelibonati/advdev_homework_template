@@ -127,3 +127,17 @@ objects:
     - apiGroup: rbac.authorization.k8s.io
       kind: Group
       name: 'system:serviceaccounts:sjl-parks-prod'
+#Role binding
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: system_image-puller
+    namespace: sjl-parks-dev
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: ServiceAccount
+    name: default
+  userNames:
+  - system:system:serviceaccount:sjl-parks-prod:default
