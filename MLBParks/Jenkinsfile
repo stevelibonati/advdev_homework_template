@@ -114,11 +114,22 @@ podTemplate(
 
     // Tag the built image with the production tag.
      openshiftTag alias: 'false', destStream: 'mlbparks-binary', destTag: prodTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'mlbparks-binary', srcTag: devTag, verbose: 'false'
-}
-
-
-    
    }
+   
+    // Blue/Green Deployment into Production
+    // -------------------------------------
+    // Do not activate the new version yet.
+    def destApp   = "tasks-green"
+    def activeApp = ""
+
+    stage('Blue/Green Production Deployment') {
+      activeApp = sh(returnStdout: true, script: "oc get route mlbparks-binary -n ${GUID}-parks-prod -o jsonpath='{ .spec.to.name }'").trim()
+      if (activeApp == "mlbparks-binary-green") {
+       destApp = "mlbparks-binary-blue"
+      }
+      echo "Active Application:      " + activeApp
+      echo "Destination Application: " + destApp
+    }
   }
 }
 
