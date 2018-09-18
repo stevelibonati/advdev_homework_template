@@ -173,7 +173,7 @@ objects:
       targetPort: 8080
     to:
       kind: Service
-      name: nationalparks-binary
+      name: nationalparks-binary-green
       weight: 100
     wildcardPolicy: None
   status:
