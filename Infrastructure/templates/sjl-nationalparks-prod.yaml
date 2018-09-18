@@ -168,7 +168,7 @@ objects:
       app: nationalparks-binary
     name: nationalparks-binary
   spec:
-    host: nationalparks-binary.apps.na39.openshift.opentlc.com
+    host: nationalparks-binary-prod.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:

@@ -168,7 +168,7 @@ objects:
       app: parksmap-binary
     name: parksmap-binary
   spec:
-    host: parksmap-binary.apps.na39.openshift.opentlc.com
+    host: parksmap-binary-prod.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:

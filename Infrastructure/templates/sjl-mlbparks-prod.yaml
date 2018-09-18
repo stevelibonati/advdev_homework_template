@@ -168,7 +168,7 @@ objects:
       app: mlbparks-binary
     name: mlbparks-binary
   spec:
-    host: mlbparks-binary.apps.na39.openshift.opentlc.com
+    host: mlbparks-binary-prod.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
