@@ -106,7 +106,7 @@ podTemplate(
     // Blue/Green Deployment into Production
     // -------------------------------------
     // Do not activate the new version yet.
-    def destApp   = "mlbparks-binary-blue"
+    def destApp   = "mlbparks-binary-green"
     def activeApp = ""
 
     stage('Blue/Green Production Deployment') {
