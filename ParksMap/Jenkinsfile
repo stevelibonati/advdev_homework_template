@@ -42,7 +42,7 @@ podTemplate(
      // Do not run tests in this step
      stage('Build war') {
        echo "Building version ${devTag}"
-       sh "${mvnCmd} clean package spring-boot:repackage -DskipTests -Dcom.redhat.xpaas.repo.redhatga"
+       sh "${mvnCmd} -X clean package spring-boot:repackage -DskipTests -Dcom.redhat.xpaas.repo.redhatga"
      }
 
      // Using Maven run the unit tests
