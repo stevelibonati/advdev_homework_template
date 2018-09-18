@@ -47,7 +47,7 @@ objects:
         containers:
           - envFrom:
               - configMapRef:
-                   name: sjl-mlbparks-blue-configs
+                   name: sjl-mlbparks-blue-config
             image: docker-registry.default.svc:5000/sjl-parks-prod/mlbparks-binary:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
