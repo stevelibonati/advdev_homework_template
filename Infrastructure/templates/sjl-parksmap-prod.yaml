@@ -82,6 +82,83 @@ objects:
     test: false
     triggers: []
 - apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 24
+    labels:
+      app: parksmap-binary-green
+    name: parksmap-binary-green
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: parksmap-binary-green
+      deploymentconfig: parksmap-binary-green
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        post:
+          failurePolicy: Abort
+          execNewPod:
+            containerName: parksmap-binary 
+            command: [ "curl","-s", "http://parksmap-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: parksmap-binary-green
+          deploymentconfig: parksmap-binary-green
+      spec:
+        containers:
+          - envFrom:
+              - configMapRef:
+                   name: sjl-parksmaps-dev-config
+            image: docker-registry.default.svc:5000/sjl-parks-dev/parksmap-binary:1.1-1
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /ws/healthz/
+                port: 8080
+                scheme: HTTP
+              initialDelaySeconds: 120
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /ws/healthz/
+                port: 8080
+                scheme: HTTP
+              initialDelaySeconds: 20
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
+            name: parksmap-binary-green
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers: []
+- apiVersion: v1
   kind: Route
   metadata:
     annotations:
@@ -160,16 +237,3 @@ objects:
   metadata:
     name: sjl-parksmaps-dev-config
     namespace: sjl-parks-dev
-# Role binding
-- apiVersion: authorization.openshift.io/v1
-  groupNames: null
-  kind: RoleBinding
-  metadata:
-    name: default_view
-  roleRef:
-    name: view
-  subjects:
-  - kind: ServiceAccount
-    name: default
-  userNames:
-  - system:serviceaccount:sjl-parks-dev:default
