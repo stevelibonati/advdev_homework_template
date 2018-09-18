@@ -24,7 +24,7 @@ podTemplate(
     
     }
 
-    dir('Nationalparks') {
+    dir('ParksMap') {
       sh "cp ../nexus_settings.xml ."
       sh "sed -i -e 's/GUID/${GUID}/g' nexus_settings.xml"
     
@@ -38,9 +38,7 @@ podTemplate(
       // Set the tag for the production image: version
       def prodTag = "${version}"
     
-     // Using Maven build the war file
-     // Do not run tests in this step
-     stage('Build war') {
+     stage('Build jar') {
        echo "Building version ${devTag}"
        sh "${mvnCmd} -X clean package spring-boot:repackage -DskipTests -Dcom.redhat.xpaas.repo.redhatga"
      }
