@@ -36,7 +36,7 @@ while : ; do
   echo "Checking if Nexus is Ready..."
   status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://$(oc get route nexus3 --template='{{ .spec.host }}' -n ${GUID}-nexus))
   if [[ "$status_code" -ne 200 ]] ; then
-    echo "...no. Sleeping 10 seconds."
+    echo "...no. Sleeping 30 seconds."
       sleep 30
     else
       break
