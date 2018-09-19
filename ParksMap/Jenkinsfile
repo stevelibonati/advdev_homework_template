@@ -136,20 +136,6 @@ podTemplate(
       echo "Switching Production application to ${destApp}."
       sh 'oc patch parksmap-binary -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
    }
   }
