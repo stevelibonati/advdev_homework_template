@@ -136,7 +136,7 @@ podTemplate(
       input "Switch Production?"
 
       echo "Switching Production application to ${destApp}."
-      sh 'oc patch nationalparks-binary tasks -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
+      sh 'oc patch nationalparks-binary -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
     }
 
 
