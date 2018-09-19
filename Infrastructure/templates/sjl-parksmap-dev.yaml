@@ -147,7 +147,7 @@ objects:
       app: parksmap-binary
     name: parksmap-binary
   spec:
-    host: parksmap-binary.apps.na39.openshift.opentlc.com
+    host: parksmap.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
@@ -161,7 +161,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: parksmap-binary.apps.na39.openshift.opentlc.com
+      host: parksmap.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
