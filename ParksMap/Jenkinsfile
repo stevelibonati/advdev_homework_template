@@ -77,22 +77,22 @@ podTemplate(
      
      // Build the OpenShift Image in OpenShift and tag it.
      stage('Build and Tag OpenShift Image') {
-       echo "Building OpenShift container image parksmap-binary:${devTag}"
-       sh "oc start-build parksmap-binary --follow --from-file=./target/parksmap.jar -n ${GUID}-parks-dev"
+       echo "Building OpenShift container image parksmap:${devTag}"
+       sh "oc start-build parksmap --follow --from-file=./target/parksmap.jar -n ${GUID}-parks-dev"
        
        // Tag the image using the devTag
-       openshiftTag alias: 'false', destStream: 'parksmap-binary', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'parksmap-binary', srcTag: 'latest', verbose: 'false'
+       openshiftTag alias: 'false', destStream: 'parksmap', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'parksmap', srcTag: 'latest', verbose: 'false'
      }
 
      // Deploy the built image to the Development Environment.
      stage('Deploy to Dev') {
        echo "Deploying container image to Development Project"
        // Update the Image on the Development Deployment Config
-       sh "oc set image dc/parksmap-binary parksmap-binary=docker-registry.default.svc:5000/${GUID}-parks-dev/parksmap-binary:${devTag} -n ${GUID}-parks-dev"
+       sh "oc set image dc/parksmap parksmap=docker-registry.default.svc:5000/${GUID}-parks-dev/parksmap:${devTag} -n ${GUID}-parks-dev"
        
        // Deploy the development application.
-       openshiftDeploy depCfg: 'parksmap-binary', namespace: '${GUID}-parks-dev', verbose: 'false', waitTime: '', waitUnit: 'sec'
-       openshiftVerifyDeployment depCfg: 'parksmap-binary', namespace: '${GUID}-parks-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '', waitUnit: 'sec'
+       openshiftDeploy depCfg: 'parksmap', namespace: '${GUID}-parks-dev', verbose: 'false', waitTime: '', waitUnit: 'sec'
+       openshiftVerifyDeployment depCfg: 'parksmap', namespace: '${GUID}-parks-dev', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '', waitUnit: 'sec'
        openshiftVerifyService namespace: '${GUID}-parks-dev', svcName: 'parksmap', verbose: 'false'
 
      }
@@ -101,10 +101,10 @@ podTemplate(
     stage('Copy Image to Nexus Docker Registry') {
       echo "Copy image to Nexus Docker Registry"
 
-      sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:admin123 docker://docker-registry.default.svc.cluster.local:5000/${GUID}-parks-dev/parksmap-binary:${devTag} docker://nexus-registry.${GUID}-nexus.svc.cluster.local:5000/parksmap-binary:${devTag}"
+      sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:admin123 docker://docker-registry.default.svc.cluster.local:5000/${GUID}-parks-dev/parksmap:${devTag} docker://nexus-registry.${GUID}-nexus.svc.cluster.local:5000/parksmap:${devTag}"
 
     // Tag the built image with the production tag.
-     openshiftTag alias: 'false', destStream: 'parksmap-binary', destTag: prodTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'parksmap-binary', srcTag: devTag, verbose: 'false'
+     openshiftTag alias: 'false', destStream: 'parksmap', destTag: prodTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'parksmap', srcTag: devTag, verbose: 'false'
     }
     
      // Blue/Green Deployment into Production
@@ -114,7 +114,7 @@ podTemplate(
     def activeApp = ""
 
     stage('Blue/Green Production Deployment') {
-      activeApp = sh(returnStdout: true, script: "oc get route parksmap-binary -n ${GUID}-parks-prod -o jsonpath='{ .spec.to.name }'").trim()
+      activeApp = sh(returnStdout: true, script: "oc get route parksmap -n ${GUID}-parks-prod -o jsonpath='{ .spec.to.name }'").trim()
       if (activeApp == "parksmap-green") {
        destApp = "parksmap-blue"
       }
@@ -122,7 +122,7 @@ podTemplate(
       echo "Destination Application: " + destApp
 
       // Update the Image on the Production Deployment Config
-      sh "oc set image dc/${destApp} ${destApp}=docker-registry.default.svc:5000/${GUID}-parks-dev/parksmap-binary:${prodTag} -n ${GUID}-parks-prod"
+      sh "oc set image dc/${destApp} ${destApp}=docker-registry.default.svc:5000/${GUID}-parks-dev/parksmap:${prodTag} -n ${GUID}-parks-prod"
 
       // Deploy the inactive application.
       openshiftDeploy depCfg: destApp, namespace: '${GUID}-parks-prod', verbose: 'false', waitTime: '', waitUnit: 'sec'
@@ -134,7 +134,7 @@ podTemplate(
       //input "Switch Production?"
 
       echo "Switching Production application to ${destApp}."
-      sh 'oc patch route parksmap-binary -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
+      sh 'oc patch route parksmap -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
     }
  
    }
