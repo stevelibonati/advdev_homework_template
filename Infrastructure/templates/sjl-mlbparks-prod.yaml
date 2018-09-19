@@ -28,7 +28,7 @@ objects:
           failurePolicy: Abort
           execNewPod:
             containerName: mlbparks-binary 
-            command: [ "curl","-s", "http://mlbparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            command: [ "curl","-s", "http://mlbparks-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
