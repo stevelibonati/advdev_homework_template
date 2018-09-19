@@ -13,7 +13,7 @@ objects:
     generation: 24
     labels:
       app: nationalparks-binary-blue
-    name: nationalparks-binary-blue
+    name: nationalparks-blue
   spec:
     replicas: 1
     revisionHistoryLimit: 10
@@ -90,7 +90,7 @@ objects:
     generation: 24
     labels:
       app: nationalparks-binary-green
-    name: nationalparks-binary-green
+    name: nationalparks-green
   spec:
     replicas: 1
     revisionHistoryLimit: 10

@@ -13,7 +13,7 @@ objects:
     generation: 24
     labels:
       app: mlbparks-binary-blue
-    name: mlbparks-binary-blue
+    name: mlbparks-blue
   spec:
     replicas: 1
     revisionHistoryLimit: 10
@@ -90,7 +90,7 @@ objects:
     generation: 24
     labels:
       app: mlbparks-binary-green
-    name: mlbparks-binary-green
+    name: mlbparks-green
   spec:
     replicas: 1
     revisionHistoryLimit: 10
