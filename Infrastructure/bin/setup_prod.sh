@@ -17,6 +17,11 @@ echo "Setting up Parks Production Environment in project ${GUID}-parks-prod"
 
 # Jenkins Service Account
 oc new-app -f ../templates/sjl-jenkins-sa.yaml -n sjl-parks-prod
+
+# Grant the correct permissions to pull images from the development project
+# in yaml, but unreliable
+oc policy add-role-to-group system:image-puller system:serviceaccounts:sjl-parks-prod -n sjl-parks-dev
+
 # StatefulSet
 oc new-app -f ../templates/sjl-parks-prod.yaml -n sjl-parks-prod
 # Microservices
