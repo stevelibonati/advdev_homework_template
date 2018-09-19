@@ -27,8 +27,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: parksmap-binary 
-            command: [ "curl","-s", "http://parksmap-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: parksmap-binary-blue 
+            command: [ "curl","-s", "http://parksmap-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -104,8 +104,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: parksmap-binary 
-            command: [ "curl","-s", "http://parksmap-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: parksmap-binary-green 
+            command: [ "curl","-s", "http://parksmap-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
