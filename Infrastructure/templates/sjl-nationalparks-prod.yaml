@@ -12,14 +12,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: nationalparks-binary-blue
+      app: nationalparks-blue
     name: nationalparks-blue
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: nationalparks-binary-blue
-      deploymentconfig: nationalparks-binary-blue
+      app: nationalparks-blue
+      deploymentconfig: nationalparks-blue
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -27,8 +27,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: nationalparks-binary-blue 
-            command: [ "curl","-s", "http://nationalparks-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: nationalparks-blue 
+            command: [ "curl","-s", "http://nationalparks-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -41,14 +41,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: nationalparks-binary-blue
-          deploymentconfig: nationalparks-binary-blue
+          app: nationalparks-blue
+          deploymentconfig: nationalparks-blue
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-nationalparks-blue-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -89,14 +89,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: nationalparks-binary-green
+      app: nationalparks-green
     name: nationalparks-green
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: nationalparks-binary-green
-      deploymentconfig: nationalparks-binary-green
+      app: nationalparks-green
+      deploymentconfig: nationalparks-green
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -104,8 +104,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: nationalparks-binary-green 
-            command: [ "curl","-s", "http://nationalparks-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: nationalparks-green 
+            command: [ "curl","-s", "http://nationalparks-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -118,14 +118,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: nationalparks-binary-green
-          deploymentconfig: nationalparks-binary-green
+          app: nationalparks-green
+          deploymentconfig: nationalparks-green
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-nationalparks-green-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -165,10 +165,10 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: nationalparks-binary
-    name: nationalparks-binary
+      app: nationalparks
+    name: nationalparks
   spec:
-    host: nationalparks-binary-prod.apps.na39.openshift.opentlc.com
+    host: nationalparks-prod.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
@@ -182,7 +182,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: nationalparks-binary.apps.na39.openshift.opentlc.com
+      host: nationalparks.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
@@ -190,7 +190,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: nationalparks-binary-blue
+      app: nationalparks-blue
       type: parksmap-backend
     name: nationalparks-blue
   spec:
@@ -199,8 +199,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: nationalparks-binary-blue
-      deploymentconfig: nationalparks-binary-blue
+      app: nationalparks-blue
+      deploymentconfig: nationalparks-blue
     sessionAffinity: None
     type: ClusterIP
   status:
@@ -210,7 +210,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: nationalparks-binary-green
+      app: nationalparks-green
       type: parksmap-backend
     name: nationalparks-green
   spec:
@@ -219,8 +219,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: nationalparks-binary-green
-      deploymentconfig: nationalparks-binary-green
+      app: nationalparks-green
+      deploymentconfig: nationalparks-green
     sessionAffinity: None
     type: ClusterIP
   status:

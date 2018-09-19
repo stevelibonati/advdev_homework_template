@@ -11,8 +11,8 @@ objects:
       openshift.io/generated-by: OpenShiftNewBuild
     creationTimestamp: '2018-09-16T22:14:32Z'
     labels:
-      build: nationalparks-binary
-    name: nationalparks-binary
+      build: nationalparks
+    name: nationalparks
     namespace: sjl-parks-dev
   spec:
     failedBuildsHistoryLimit: 5
@@ -20,7 +20,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: 'nationalparks-binary:latest'
+        name: 'nationalparks:latest'
     postCommit: {}
     resources: {}
     runPolicy: Serial
@@ -52,14 +52,14 @@ objects:
     creationTimestamp: '2018-09-16T22:14:32Z'
     generation: 1
     labels:
-      build: nationalparks-binary
-    name: nationalparks-binary
+      build: nationalparks
+    name: nationalparks
     namespace: sjl-parks-dev
   spec:
     lookupPolicy:
       local: false
   status:
-    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary'
+    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/nationalparks'
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -68,14 +68,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: nationalparks-binary
-    name: nationalparks-binary
+      app: nationalparks
+    name: nationalparks
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: nationalparks-binary
-      deploymentconfig: nationalparks-binary
+      app: nationalparks
+      deploymentconfig: nationalparks
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -83,8 +83,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: nationalparks-binary 
-            command: [ "curl","-s", "http://nationalparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: nationalparks 
+            command: [ "curl","-s", "http://nationalparks.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -97,14 +97,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: nationalparks-binary
-          deploymentconfig: nationalparks-binary
+          app: nationalparks
+          deploymentconfig: nationalparks
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-nationalparks-dev-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-dev/nationalparks:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -126,7 +126,7 @@ objects:
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 2
-            name: nationalparks-binary
+            name: nationalparks
             resources: {}
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
@@ -144,10 +144,10 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: nationalparks-binary
-    name: nationalparks-binary
+      app: nationalparks
+    name: nationalparks
   spec:
-    host: nationalparks-binary.apps.na39.openshift.opentlc.com
+    host: nationalparks.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
@@ -161,7 +161,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: nationalparks-binary.apps.na39.openshift.opentlc.com
+      host: nationalparks.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
@@ -169,7 +169,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: nationalparks-binary
+      app: nationalparks
       type: parksmap-backend
     name: nationalparks
   spec:
@@ -178,8 +178,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: nationalparks-binary
-      deploymentconfig: nationalparks-binary
+      app: nationalparks
+      deploymentconfig: nationalparks
     sessionAffinity: None
     type: ClusterIP
   status:

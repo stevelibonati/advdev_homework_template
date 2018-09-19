@@ -12,14 +12,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: parksmap-binary-blue
+      app: parksmap-blue
     name: parksmap-blue
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: parksmap-binary-blue
-      deploymentconfig: parksmap-binary-blue
+      app: parksmap-blue
+      deploymentconfig: parksmap-blue
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -27,8 +27,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: parksmap-binary-blue 
-            command: [ "curl","-s", "http://parksmap-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: parksmap-blue 
+            command: [ "curl","-s", "http://parksmap-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -41,14 +41,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: parksmap-binary-blue
-          deploymentconfig: parksmap-binary-blue
+          app: parksmap-blue
+          deploymentconfig: parksmap-blue
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-parksmaps-blue-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/parksmap-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-dev/parksmap:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -89,14 +89,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: parksmap-binary-green
+      app: parksmap-green
     name: parksmap-green
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: parksmap-binary-green
-      deploymentconfig: parksmap-binary-green
+      app: parksmap-green
+      deploymentconfig: parksmap-green
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -104,8 +104,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: parksmap-binary-green 
-            command: [ "curl","-s", "http://parksmap-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: parksmap-green 
+            command: [ "curl","-s", "http://parksmap-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -118,14 +118,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: parksmap-binary-green
-          deploymentconfig: parksmap-binary-green
+          app: parksmap-green
+          deploymentconfig: parksmap-green
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-parksmaps-green-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/parksmap-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-dev/parksmap:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -165,10 +165,10 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: parksmap-binary
-    name: parksmap-binary
+      app: parksmap
+    name: parksmap
   spec:
-    host: parksmap-binary-prod.apps.na39.openshift.opentlc.com
+    host: parksmap-prod.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
@@ -182,7 +182,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: parksmap-binary.apps.na39.openshift.opentlc.com
+      host: parksmap.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
@@ -190,7 +190,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: parksmap-binary-blue
+      app: parksmap-blue
       type: parksmap-backend
     name: parksmap-blue
   spec:
@@ -199,8 +199,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: parksmap-binary-blue
-      deploymentconfig: parksmap-binary-blue
+      app: parksmap-blue
+      deploymentconfig: parksmap-blue
     sessionAffinity: None
     type: ClusterIP
   status:
@@ -210,7 +210,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: parksmap-binary-green
+      app: parksmap-green
       type: parksmap-backend
     name: parksmap-green
   spec:
@@ -219,8 +219,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: parksmap-binary-green
-      deploymentconfig: parksmap-binary-green
+      app: parksmap-green
+      deploymentconfig: parksmap-green
     sessionAffinity: None
     type: ClusterIP
   status:

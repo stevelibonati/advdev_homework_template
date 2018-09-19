@@ -11,8 +11,8 @@ objects:
       openshift.io/generated-by: OpenShiftNewBuild
     creationTimestamp: '2018-09-16T22:14:32Z'
     labels:
-      build: mlbparks-binary
-    name: mlbparks-binary
+      build: mlbparks
+    name: mlbparks
     namespace: sjl-parks-dev
   spec:
     failedBuildsHistoryLimit: 5
@@ -20,7 +20,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: 'mlbparks-binary:latest'
+        name: 'mlbparks:latest'
     postCommit: {}
     resources: {}
     runPolicy: Serial
@@ -52,14 +52,14 @@ objects:
     creationTimestamp: '2018-09-16T22:14:32Z'
     generation: 1
     labels:
-      build: mlbparks-binary
-    name: mlbparks-binary
+      build: mlbparks
+    name: mlbparks
     namespace: sjl-parks-dev
   spec:
     lookupPolicy:
       local: false
   status:
-    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary'
+    dockerImageRepository: 'docker-registry.default.svc:5000/sjl-parks-dev/mlbparks'
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -68,14 +68,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: mlbparks-binary
-    name: mlbparks-binary
+      app: mlbparks
+    name: mlbparks
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: mlbparks-binary
-      deploymentconfig: mlbparks-binary
+      app: mlbparks
+      deploymentconfig: mlbparks
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -83,8 +83,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: mlbparks-binary 
-            command: [ "curl","-s", "http://mlbparks-binary.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: mlbparks 
+            command: [ "curl","-s", "http://mlbparks.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -97,14 +97,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: mlbparks-binary
-          deploymentconfig: mlbparks-binary
+          app: mlbparks
+          deploymentconfig: mlbparks
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-parks-dev-config
-            image: docker-registry.default.svc:5000/sjl-parks-dev/mlbparks-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-dev/mlbparks:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -126,7 +126,7 @@ objects:
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 2
-            name: mlbparks-binary
+            name: mlbparks
             resources: {}
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
@@ -144,10 +144,10 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: mlbparks-binary
-    name: mlbparks-binary
+      app: mlbparks
+    name: mlbparks
   spec:
-    host: mlbparks-binary.apps.na39.openshift.opentlc.com
+    host: mlbparks.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
@@ -161,7 +161,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: mlbparks-binary.apps.na39.openshift.opentlc.com
+      host: mlbparks.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
@@ -169,7 +169,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: mlbparks-binary
+      app: mlbparks
       type: parksmap-backend
     name: mlbparks
   spec:
@@ -178,8 +178,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: mlbparks-binary
-      deploymentconfig: mlbparks-binary
+      app: mlbparks
+      deploymentconfig: mlbparks
     sessionAffinity: None
     type: ClusterIP
   status:

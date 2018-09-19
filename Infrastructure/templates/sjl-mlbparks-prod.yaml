@@ -12,14 +12,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: mlbparks-binary-blue
+      app: mlbparks-blue
     name: mlbparks-blue
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: mlbparks-binary-blue
-      deploymentconfig: mlbparks-binary-blue
+      app: mlbparks-blue
+      deploymentconfig: mlbparks-blue
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -27,8 +27,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: mlbparks-binary-blue 
-            command: [ "curl","-s", "http://mlbparks-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: mlbparks-blue 
+            command: [ "curl","-s", "http://mlbparks-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -41,14 +41,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: mlbparks-binary-blue
-          deploymentconfig: mlbparks-binary-blue
+          app: mlbparks-blue
+          deploymentconfig: mlbparks-blue
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-mlbparks-blue-config
-            image: docker-registry.default.svc:5000/sjl-parks-prod/mlbparks-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-prod/mlbparks:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -89,14 +89,14 @@ objects:
     creationTimestamp: null
     generation: 24
     labels:
-      app: mlbparks-binary-green
+      app: mlbparks-green
     name: mlbparks-green
   spec:
     replicas: 1
     revisionHistoryLimit: 10
     selector:
-      app: mlbparks-binary-green
-      deploymentconfig: mlbparks-binary-green
+      app: mlbparks-green
+      deploymentconfig: mlbparks-green
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -104,8 +104,8 @@ objects:
         post:
           failurePolicy: Abort
           execNewPod:
-            containerName: mlbparks-binary-green 
-            command: [ "curl","-s", "http://mlbparks-binary-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
+            containerName: mlbparks-green 
+            command: [ "curl","-s", "http://mlbparks-prod.apps.na39.openshift.opentlc.com/ws/data/load" ] 
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
@@ -118,14 +118,14 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: mlbparks-binary-green
-          deploymentconfig: mlbparks-binary-green
+          app: mlbparks-green
+          deploymentconfig: mlbparks-green
       spec:
         containers:
           - envFrom:
               - configMapRef:
                    name: sjl-mlbparks-green-config
-            image: docker-registry.default.svc:5000/sjl-parks-prod/mlbparks-binary:1.1-1
+            image: docker-registry.default.svc:5000/sjl-parks-prod/mlbparks:1.1-1
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
@@ -165,10 +165,10 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: mlbparks-binary
-    name: mlbparks-binary
+      app: mlbparks
+    name: mlbparks
   spec:
-    host: mlbparks-binary-prod.apps.na39.openshift.opentlc.com
+    host: mlbparks-prod.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
@@ -182,7 +182,7 @@ objects:
       - lastTransitionTime: 2018-09-14T12:32:39Z
         status: "True"
         type: Admitted
-      host: mlbparks-binary.apps.na39.openshift.opentlc.com
+      host: mlbparks.apps.na39.openshift.opentlc.com
       routerName: router
       wildcardPolicy: None
 - apiVersion: v1
@@ -190,7 +190,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: mlbparks-binary-blue
+      app: mlbparks-blue
       type: parksmap-backend
     name: mlbparks-blue
   spec:
@@ -199,8 +199,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: mlbparks-binary-blue
-      deploymentconfig: mlbparks-binary-blue
+      app: mlbparks-blue
+      deploymentconfig: mlbparks-blue
     sessionAffinity: None
     type: ClusterIP
   status:
@@ -210,7 +210,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: mlbparks-binary-green
+      app: mlbparks-green
       type: parksmap-backend
     name: mlbparks-green
   spec:
@@ -219,8 +219,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: mlbparks-binary-green
-      deploymentconfig: mlbparks-binary-green
+      app: mlbparks-green
+      deploymentconfig: mlbparks-green
     sessionAffinity: None
     type: ClusterIP
   status:
