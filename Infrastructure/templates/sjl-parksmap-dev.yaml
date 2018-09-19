@@ -152,7 +152,7 @@ objects:
       targetPort: 8080
     to:
       kind: Service
-      name: parksmap-binary
+      name: parksmap
       weight: 100
     wildcardPolicy: None
   status:
@@ -171,7 +171,7 @@ objects:
     labels:
       app: parksmap-binary
       type: parksmap-backend
-    name: parksmap-binary
+    name: parksmap
   spec:
     ports:
     - port: 8080

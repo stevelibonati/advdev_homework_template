@@ -152,7 +152,7 @@ objects:
       targetPort: 8080
     to:
       kind: Service
-      name: mlbparks-binary
+      name: mlbparks
       weight: 100
     wildcardPolicy: None
   status:
@@ -171,7 +171,7 @@ objects:
     labels:
       app: mlbparks-binary
       type: parksmap-backend
-    name: mlbparks-binary
+    name: mlbparks
   spec:
     ports:
     - port: 8080
