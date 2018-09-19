@@ -173,7 +173,7 @@ objects:
       targetPort: 8080
     to:
       kind: Service
-      name: nationalparks-binary-green
+      name: nationalparks-green
       weight: 100
     wildcardPolicy: None
   status:
@@ -192,7 +192,7 @@ objects:
     labels:
       app: nationalparks-binary-blue
       type: parksmap-backend
-    name: nationalparks-binary-blue
+    name: nationalparks-blue
   spec:
     ports:
     - port: 8080
@@ -212,7 +212,7 @@ objects:
     labels:
       app: nationalparks-binary-green
       type: parksmap-backend
-    name: nationalparks-binary-green
+    name: nationalparks-green
   spec:
     ports:
     - port: 8080

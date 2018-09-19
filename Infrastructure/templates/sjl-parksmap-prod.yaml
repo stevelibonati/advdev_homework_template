@@ -173,7 +173,7 @@ objects:
       targetPort: 8080
     to:
       kind: Service
-      name: parksmap-binary-green
+      name: parksmap-green
       weight: 100
     wildcardPolicy: None
   status:
@@ -192,7 +192,7 @@ objects:
     labels:
       app: parksmap-binary-blue
       type: parksmap-backend
-    name: parksmap-binary-blue
+    name: parksmap-blue
   spec:
     ports:
     - port: 8080
@@ -212,7 +212,7 @@ objects:
     labels:
       app: parksmap-binary-green
       type: parksmap-backend
-    name: parksmap-binary-green
+    name: parksmap-green
   spec:
     ports:
     - port: 8080
