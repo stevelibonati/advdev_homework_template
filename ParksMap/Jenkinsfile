@@ -110,13 +110,13 @@ podTemplate(
      // Blue/Green Deployment into Production
     // -------------------------------------
     // Do not activate the new version yet.
-    def destApp   = "parksmap-binary-green"
+    def destApp   = "parksmap-green"
     def activeApp = ""
 
     stage('Blue/Green Production Deployment') {
       activeApp = sh(returnStdout: true, script: "oc get route parksmap-binary -n ${GUID}-parks-prod -o jsonpath='{ .spec.to.name }'").trim()
-      if (activeApp == "parksmap-binary-green") {
-       destApp = "parksmap-binary-blue"
+      if (activeApp == "parksmap-green") {
+       destApp = "parksmap-blue"
       }
       echo "Active Application:      " + activeApp
       echo "Destination Application: " + destApp
