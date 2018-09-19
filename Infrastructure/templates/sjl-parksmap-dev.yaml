@@ -147,7 +147,7 @@ objects:
       app: parksmap
     name: parksmap
   spec:
-    host: parksmap.apps.na39.openshift.opentlc.com
+    host: parksmap-sjl-parks-dev.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:

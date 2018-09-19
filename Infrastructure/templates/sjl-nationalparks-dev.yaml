@@ -147,7 +147,7 @@ objects:
       app: nationalparks
     name: nationalparks
   spec:
-    host: nationalparks.apps.na39.openshift.opentlc.com
+    host: nationalparks-sjl-parks-dev.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:

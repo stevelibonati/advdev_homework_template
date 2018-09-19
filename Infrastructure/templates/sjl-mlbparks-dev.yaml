@@ -147,7 +147,7 @@ objects:
       app: mlbparks
     name: mlbparks
   spec:
-    host: mlbparks.apps.na39.openshift.opentlc.com
+    host: mlbparks-sjl-parks-dev.apps.na39.openshift.opentlc.com
     port:
       targetPort: 8080
     to:
