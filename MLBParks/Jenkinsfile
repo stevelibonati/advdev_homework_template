@@ -130,7 +130,7 @@ podTemplate(
       input "Switch Production?"
 
       echo "Switching Production application to ${destApp}."
-      sh 'oc patch route tasks -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
+      sh 'oc patch route mlbparks-binary -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
     }
 
     }
