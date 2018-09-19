@@ -15,4 +15,4 @@ echo "Setting up Sonarqube in project $GUID-sonarqube"
 
 # To be Implemented by Student
 
-oc new-app -f ../templates/sjl-sonarqube.yaml -n sjl-sonarqube
+oc new-app -f ./Infrastructure/templates/sjl-sonarqube.yaml -n sjl-sonarqube
